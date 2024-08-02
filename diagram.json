@@ -14,8 +14,8 @@
     {
       "type": "wokwi-buzzer",
       "id": "wokwi-buzzer-0",
-      "top": 102.9,
-      "left": 110.1,
+      "top": 93.3,
+      "left": 129.3,
       "rotate": 90,
       "attrs": {}
     },
@@ -51,6 +51,14 @@
       "left": 128.8,
       "rotate": 270,
       "attrs": { "travelLength": "30" }
+    },
+    {
+      "type": "wokwi-ds1307",
+      "id": "rtc1",
+      "top": 27,
+      "left": -386.1,
+      "rotate": 180,
+      "attrs": {}
     }
   ],
   "connections": [
@@ -81,7 +89,11 @@
     [ "wokwi-dht22-0:GND", "pico:GND.1", "black", [ "v0" ] ],
     [ "wokwi-dht22-0:SDA", "pico:GP4", "violet", [ "h0" ] ],
     [ "wokwi-buzzer-0:1", "pico:GND.1", "black", [ "v0" ] ],
-    [ "wokwi-buzzer-0:2", "pico:GP17", "green", [ "h0" ] ]
+    [ "wokwi-buzzer-0:2", "pico:GP17", "green", [ "h0" ] ],
+    [ "rtc1:5V", "pico:VBUS", "red", [ "h0" ] ],
+    [ "rtc1:GND", "pico:GND.1", "black", [ "h0" ] ],
+    [ "rtc1:SDA", "pico:GP0", "blue", [ "h0" ] ],
+    [ "rtc1:SCL", "pico:GP1", "blue", [ "h0" ] ]
   ],
   "dependencies": {}
 }
