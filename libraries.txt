@@ -7,5 +7,4 @@ LiquidCrystal
 DHTlib
 Adafruit Unified Sensor
 DHT sensor library
-RTClib
 
