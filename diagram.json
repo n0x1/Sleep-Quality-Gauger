@@ -1,73 +1,68 @@
 {
-    "version": 1,
-    "author": "The Bin - Hack Club",
-    "editor": "wokwi",
-    "parts": [
-      { "type": "board-pi-pico-w", "id": "pico", "top": -3.25, "left": 3.55, "attrs": {} },
-      { "type": "wokwi-ds1307", "id": "wokwi-ds1307-0", "top": 359.4, "left": -143.9, "attrs": {} },
-      {
-        "type": "wokwi-photoresistor-sensor",
-        "id": "wokwi-photoresistor-sensor-0",
-        "top": -6.4,
-        "left": -268,
-        "attrs": {}
-      },
-      { "type": "wokwi-buzzer", "id": "wokwi-buzzer-0", "top": 430, "left": 203.6, "attrs": {} },
-      {
-        "type": "wokwi-pir-motion-sensor",
-        "id": "wokwi-pir-motion-sensor-0",
-        "top": 599.2,
-        "left": 21.42,
-        "attrs": {}
-      },
-      {
-        "type": "wokwi-membrane-keypad",
-        "id": "wokwi-membrane-keypad-0",
-        "top": -357.2,
-        "left": 207.2,
-        "attrs": {}
-      },
-      {
-        "type": "wokwi-ntc-temperature-sensor",
-        "id": "wokwi-ntc-temperature-sensor-0",
-        "top": 530.6,
-        "left": -202.2,
-        "attrs": {}
-      },
-      { "type": "wokwi-dht22", "id": "wokwi-dht22-0", "top": 576.3, "left": -53.4, "attrs": {} },
-      { "type": "wokwi-lcd1602", "id": "lcd1", "top": -274.97, "left": -99.2, "attrs": {} },
-      {
-        "type": "wokwi-resistor",
-        "id": "r1",
-        "top": -24,
-        "left": 76.25,
-        "rotate": 90,
-        "attrs": { "value": "10" }
-      }
-    ],
-    "connections": [
-      [ "pico:GP0", "$serialMonitor:RX", "", [] ],
-      [ "pico:GP1", "$serialMonitor:TX", "", [] ],
-      [ "lcd1:VSS", "pico:GND.1", "green", [ "v0" ] ],
-      [ "lcd1:VDD", "pico:VBUS", "green", [ "v0" ] ],
-      [ "lcd1:RS", "pico:GP12", "green", [ "v0" ] ],
-      [ "lcd1:RW", "pico:GND.1", "green", [ "v0" ] ],
-      [ "lcd1:E", "pico:GP11", "green", [ "v0" ] ],
-      [ "lcd1:D4", "pico:GP10", "green", [ "v0" ] ],
-      [ "lcd1:D5", "pico:GP9", "green", [ "v0" ] ],
-      [ "lcd1:D6", "pico:GP8", "green", [ "v0" ] ],
-      [ "lcd1:D7", "pico:GP7", "green", [ "v0" ] ],
-      [ "lcd1:A", "r1:1", "green", [ "v0" ] ],
-      [ "r1:2", "pico:VBUS", "green", [ "h0" ] ],
-      [ "lcd1:K", "pico:GND.1", "green", [ "v0" ] ],
-      [ "wokwi-membrane-keypad-0:R1", "pico:GP28", "green", [ "v0" ] ],
-      [ "wokwi-membrane-keypad-0:R2", "pico:GP27", "green", [ "v0" ] ],
-      [ "wokwi-membrane-keypad-0:R3", "pico:GP26", "green", [ "v0" ] ],
-      [ "wokwi-membrane-keypad-0:R4", "pico:GP22", "green", [ "v0" ] ],
-      [ "wokwi-membrane-keypad-0:C1", "pico:GP21", "green", [ "v0" ] ],
-      [ "wokwi-membrane-keypad-0:C2", "pico:GP20", "green", [ "v0" ] ],
-      [ "wokwi-membrane-keypad-0:C3", "pico:GP19", "green", [ "v0" ] ],
-      [ "wokwi-membrane-keypad-0:C4", "pico:GP17", "green", [ "v0" ] ]
-    ],
-    "dependencies": {}
-  }
+  "version": 1,
+  "author": "The Bin - Hack Club",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-pi-pico-w", "id": "pico", "top": -3.25, "left": 3.55, "attrs": {} },
+    {
+      "type": "wokwi-photoresistor-sensor",
+      "id": "wokwi-photoresistor-sensor-0",
+      "top": 32,
+      "left": -220,
+      "attrs": {}
+    },
+    { "type": "wokwi-buzzer", "id": "wokwi-buzzer-0", "top": 430, "left": 203.6, "attrs": {} },
+    {
+      "type": "wokwi-pir-motion-sensor",
+      "id": "wokwi-pir-motion-sensor-0",
+      "top": 136.12,
+      "left": 106.1,
+      "rotate": 90,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-ntc-temperature-sensor",
+      "id": "wokwi-ntc-temperature-sensor-0",
+      "top": 50.2,
+      "left": 124.8,
+      "rotate": 180,
+      "attrs": {}
+    },
+    { "type": "wokwi-dht22", "id": "wokwi-dht22-0", "top": 576.3, "left": -53.4, "attrs": {} },
+    { "type": "wokwi-lcd1602", "id": "lcd1", "top": -313.37, "left": -70.4, "attrs": {} },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": -24,
+      "left": 76.25,
+      "rotate": 90,
+      "attrs": { "value": "10" }
+    }
+  ],
+  "connections": [
+    [ "pico:GP0", "$serialMonitor:RX", "", [] ],
+    [ "pico:GP1", "$serialMonitor:TX", "", [] ],
+    [ "lcd1:VSS", "pico:GND.1", "green", [ "v0" ] ],
+    [ "lcd1:VDD", "pico:VBUS", "green", [ "v0" ] ],
+    [ "lcd1:RS", "pico:GP12", "green", [ "v0" ] ],
+    [ "lcd1:RW", "pico:GND.1", "green", [ "v0" ] ],
+    [ "lcd1:E", "pico:GP11", "green", [ "v0" ] ],
+    [ "lcd1:D4", "pico:GP10", "green", [ "v0" ] ],
+    [ "lcd1:D5", "pico:GP9", "green", [ "v0" ] ],
+    [ "lcd1:D6", "pico:GP8", "green", [ "v0" ] ],
+    [ "lcd1:D7", "pico:GP7", "green", [ "v0" ] ],
+    [ "lcd1:A", "r1:1", "green", [ "v0" ] ],
+    [ "r1:2", "pico:VBUS", "green", [ "h0" ] ],
+    [ "lcd1:K", "pico:GND.1", "green", [ "v0" ] ],
+    [ "wokwi-photoresistor-sensor-0:VCC", "pico:VBUS", "red", [ "h0" ] ],
+    [ "wokwi-photoresistor-sensor-0:GND", "pico:GND.1", "black", [ "h0" ] ],
+    [ "wokwi-photoresistor-sensor-0:DO", "pico:GP2", "green", [ "h0" ] ],
+    [ "wokwi-pir-motion-sensor-0:VCC", "pico:VBUS", "red", [ "h0" ] ],
+    [ "wokwi-pir-motion-sensor-0:OUT", "pico:GP16", "green", [ "h0" ] ],
+    [ "wokwi-pir-motion-sensor-0:GND", "pico:GND.1", "black", [ "h0" ] ],
+    [ "wokwi-ntc-temperature-sensor-0:GND", "pico:GND.1", "black", [ "h0" ] ],
+    [ "wokwi-ntc-temperature-sensor-0:VCC", "pico:VBUS", "red", [ "h0" ] ],
+    [ "wokwi-ntc-temperature-sensor-0:OUT", "pico:GP26", "green", [ "h0" ] ]
+  ],
+  "dependencies": {}
+}
