@@ -33,7 +33,7 @@
       "top": -4.8,
       "left": -238.5,
       "rotate": 270,
-      "attrs": { "humidity": "35", "temperature": "15.5" }
+      "attrs": { "humidity": "100", "temperature": "80" }
     },
     { "type": "wokwi-lcd1602", "id": "lcd1", "top": -351.77, "left": -156.8, "attrs": {} },
     {

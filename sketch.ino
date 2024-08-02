@@ -14,6 +14,8 @@
 DHT dht(DHT_PIN, DHT22);
 
 const int ALARM_HOURS = 8; // IN HOURS, after going to sleep. 8 recomended
+bool alarmNotStopped = true;
+int cursorX = 0;
 
 //motion
 int detectedMotion = 0;
@@ -85,26 +87,28 @@ void setup() {
     lcd.begin(16, 2);
       lcd.createChar(0, heart);
       lcd.createChar(1, smiley);
-  lcd.clear();  
-  lcd.setCursor(0, 0); 
-  lcd.print("On");
+    lcd.print("Slide UP to enable"); 
+    lcd.write(byte(0)); // heart
+    lcd.write(byte(1)); // :)
+    delay(1000);
+    lcd.clear();
+
 
    dht.begin(); 
 
-  // Serial1.begin(11520);  // Start serial communication bugging lcd maybe
+  // setAlarm();
 }
 
 void loop() { // enclose all in if so its only if switch is high
 
   int sliderValue = analogRead(SLIDER_PIN);
+  unsigned long time = millis();
 
   motionState = digitalRead(MOTION_PIN);
    lightState = digitalRead(LDR_PIN);
 
   if (sliderValue > 700 && running == true) {
 
-       lcd.clear(); 
-        delay(1000);
     //motion
     if (motionWarning == false) {
       if (motionState == HIGH) {
@@ -114,7 +118,7 @@ void loop() { // enclose all in if so its only if switch is high
       }
       if (detectedMotion >= motionCountTillWarning) {
         motionWarning = true;
-        lcd.print("OVER MOTION LIMIT");
+        printWithFormatting("Motion");
       }
     }
 
@@ -125,9 +129,10 @@ void loop() { // enclose all in if so its only if switch is high
         isLit++;
         delay(1000);
       }
-      if (isLit >= lightCountTilWarning) {
+      if (!lightWarning && isLit >= lightCountTilWarning) {
         lightWarning = true;
-        lcd.print("BRIGHT");
+
+        lcd.print("Bright");
       }
     }
 
@@ -137,11 +142,11 @@ void loop() { // enclose all in if so its only if switch is high
 
       if (celsius > TEMP_THRESHOLD_HIGH) {
           tempTooHighCount++;
-           lcd.print("HIGH TEMP WARNING");
           delay(1000);
       }
-      if (tempTooHighCount >= tempHighCountTilWarning) {
+      if (!tempHighWarning && tempTooHighCount >= tempHighCountTilWarning) {
           tempHighWarning = true;
+          lcd.print("Hot");
       }
     }
         if (tempLowWarning == false) {
@@ -149,12 +154,12 @@ void loop() { // enclose all in if so its only if switch is high
 
       if (celsius < TEMP_THRESHOLD_LOW) {
           tempTooLowCount++;
-          lcd.print("LOW TEMP WARNING");
+          
           delay(1000);
       }
-      if (tempTooLowCount >= tempLowCountTilWarning) {
+      if (!tempLowWarning && tempTooLowCount >= tempLowCountTilWarning) {
           tempLowWarning = true;
-  
+          lcd.print("Cold");
       }
 
     }
@@ -165,11 +170,11 @@ void loop() { // enclose all in if so its only if switch is high
 
       if (humidity > HUMID_THRESHOLD_HIGH) {
           humidTooHighCount++;
-           lcd.print("HIGH HUMID WARNING");
           delay(1000);
       }
-      if (humidTooHighCount >= humidHighCountTilWarning) {
+      if (!humidHighWarning && humidTooHighCount >= humidHighCountTilWarning) {
           humidHighWarning = true;
+          lcd.print("Humid");
       }
     }
         if (humidLowWarning == false) {
@@ -177,11 +182,11 @@ void loop() { // enclose all in if so its only if switch is high
 
       if (humidity < HUMID_THRESHOLD_LOW) {
           humidTooLowCount++;
-          lcd.print("LOW HUMID WARNING");
-          delay(1000);
+
       }
-      if (humidTooLowCount >= humidLowCountTilWarning) {
+      if (humidLowWarning == false && humidTooLowCount >= humidLowCountTilWarning) {
           humidLowWarning = true;
+          lcd.print("Dry");
   
       }
 
@@ -190,15 +195,51 @@ void loop() { // enclose all in if so its only if switch is high
 
   }
 
-  if (!lightWarning && !motionWarning && !humidLowWarning && !humidHighWarning && !tempLowWarning && !tempHighWarning) {
-    lcd.print("No issues"); // heart
-    lcd.write(byte(0)); // heart
-    lcd.write(byte(1)); // :)
-    delay(1000);
-  }
+ 
+ int frequencies[] = { 523, 587, 659, 698, 784, 880, 987, 1046 };
+
+  // Play each note in the tune
+if (!running && sliderValue > 700) {
+  for (int i = 0; i < 8; i++) {
+    tone(BUZZER_PIN, frequencies[i], 15);
+    delay(100); 
+  } // alarm
+  delay(1000);
+}
+
 
   delay(10);
 }
 
 
-// after 8 hours, alarm?
+void setAlarm() {
+  
+  delay(ALARM_HOURS * 60 * 60 * 1000); // to ms, 8 hours rec 
+
+    running = false; // this triggers alarm in loop()
+
+
+}
+
+
+void printWithFormatting(const char* text) {
+    int length = 0;
+
+  if (cursorX == 0) {
+    lcd.print("Warnings: ");
+    lcd.setCursor(0,1);
+    lcd.print(text);
+    while (text[length] != '\0') {
+        length++;
+    }
+  } else {
+    lcd.print(", ");
+    lcd.print(text);
+    while (text[length] != '\0') {
+        length++;
+    }
+  } 
+
+
+  cursorX = length;
+}
