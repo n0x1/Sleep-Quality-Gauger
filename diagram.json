@@ -7,8 +7,8 @@
     {
       "type": "wokwi-photoresistor-sensor",
       "id": "wokwi-photoresistor-sensor-0",
-      "top": 176,
-      "left": -191.2,
+      "top": 80,
+      "left": -364,
       "attrs": {}
     },
     {
@@ -22,20 +22,20 @@
     {
       "type": "wokwi-pir-motion-sensor",
       "id": "wokwi-pir-motion-sensor-0",
-      "top": 164.92,
-      "left": 182.9,
+      "top": 174.52,
+      "left": 154.1,
       "rotate": 90,
       "attrs": {}
     },
     {
       "type": "wokwi-dht22",
       "id": "wokwi-dht22-0",
-      "top": -4.8,
-      "left": -238.5,
+      "top": -62.4,
+      "left": -324.9,
       "rotate": 270,
-      "attrs": { "humidity": "100", "temperature": "80" }
+      "attrs": { "humidity": "90.5", "temperature": "80" }
     },
-    { "type": "wokwi-lcd1602", "id": "lcd1", "top": -351.77, "left": -156.8, "attrs": {} },
+    { "type": "wokwi-lcd1602", "id": "lcd1", "top": -351.77, "left": -176, "attrs": {} },
     {
       "type": "wokwi-resistor",
       "id": "r1",
@@ -51,14 +51,6 @@
       "left": 128.8,
       "rotate": 270,
       "attrs": { "travelLength": "30" }
-    },
-    {
-      "type": "wokwi-ds1307",
-      "id": "rtc1",
-      "top": 27,
-      "left": -386.1,
-      "rotate": 180,
-      "attrs": {}
     }
   ],
   "connections": [
@@ -78,7 +70,7 @@
     [ "lcd1:K", "pico:GND.1", "yellow", [ "v0" ] ],
     [ "wokwi-photoresistor-sensor-0:VCC", "pico:VBUS", "red", [ "h0" ] ],
     [ "wokwi-photoresistor-sensor-0:GND", "pico:GND.1", "black", [ "h0" ] ],
-    [ "wokwi-photoresistor-sensor-0:DO", "pico:GP2", "green", [ "h0" ] ],
+    [ "wokwi-photoresistor-sensor-0:DO", "pico:GP2", "orange", [ "h0" ] ],
     [ "wokwi-pir-motion-sensor-0:VCC", "pico:VBUS", "red", [ "h0" ] ],
     [ "wokwi-pir-motion-sensor-0:OUT", "pico:GP16", "green", [ "h0" ] ],
     [ "wokwi-pir-motion-sensor-0:GND", "pico:GND.1", "black", [ "h0" ] ],
@@ -89,11 +81,7 @@
     [ "wokwi-dht22-0:GND", "pico:GND.1", "black", [ "v0" ] ],
     [ "wokwi-dht22-0:SDA", "pico:GP4", "violet", [ "h0" ] ],
     [ "wokwi-buzzer-0:1", "pico:GND.1", "black", [ "v0" ] ],
-    [ "wokwi-buzzer-0:2", "pico:GP17", "green", [ "h0" ] ],
-    [ "rtc1:5V", "pico:VBUS", "red", [ "h0" ] ],
-    [ "rtc1:GND", "pico:GND.1", "black", [ "h0" ] ],
-    [ "rtc1:SDA", "pico:GP0", "blue", [ "h0" ] ],
-    [ "rtc1:SCL", "pico:GP1", "blue", [ "h0" ] ]
+    [ "wokwi-buzzer-0:2", "pico:GP17", "green", [ "h0" ] ]
   ],
   "dependencies": {}
 }

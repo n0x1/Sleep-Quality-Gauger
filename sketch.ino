@@ -2,21 +2,26 @@
 #include <Adafruit_Sensor.h>
 #include <DHT.h>
 #include <DHT_U.h>
-#include <RTClib.h>
 
-
-#define LDR_PIN 2
+#define LDR_PIN 2 // photo res
 #define MOTION_PIN 16
 #define TEMP_PIN 26 // temperature 
 #define SLIDER_PIN 27
 #define DHT_PIN 4 // sda pin
 #define BUZZER_PIN 17
-#define DIO 22
-#define CLK 21
+
 
 DHT dht(DHT_PIN, DHT22);
-RTC_DS1307 rtc;
 
+
+// meanings (some abbreviations)
+// Hot: hot temperature
+// Cld: cold temperature
+// Hum: humid
+// Dry: dry
+// Lgt: light (brightness)
+// Mov:  movement
+// only 3 max will display (autoscroll is glitchy) f your display overflows invest in your sleeping environment ASAP
 
 int runCount = 0;
 
@@ -107,16 +112,14 @@ void setup() {
     lcd.print("Slide UP ");
     lcd.write(byte(1)); // :)
     delay(4500);
+
+
     lcd.setCursor(0,0);
     lcd.clear();
 
    dht.begin(); 
 
    alarmStartTime = millis() + (ALARM_HOURS * 60 * 60 * 1000); // ms
-
-       if (!rtc.begin()) {
-        lcd.print("Couldn't find RTC");
-    }
 
 }
 
@@ -127,11 +130,7 @@ void loop() {
    lightState = digitalRead(LDR_PIN);
 
 
-  if (runCount == 0) {
-    lcd.print("No issues"); 
-    lcd.write(byte(0)); // heart
-    lcd.write(byte(1)); // :)
-  }
+ 
   if (sliderValue > 700 && running == true) {
 
 
@@ -144,7 +143,7 @@ void loop() {
       }
       if (detectedMotion >= motionCountTillWarning) {
         motionWarning = true;
-        printWithFormatting("Motion");
+        printWithFormatting("Mov");
       }
     }
 
@@ -158,7 +157,7 @@ void loop() {
       if (!lightWarning && isLit >= lightCountTilWarning) {
         lightWarning = true;
 
-        printWithFormatting("Bright");
+        printWithFormatting("Lgt");
       }
     }
 
@@ -185,7 +184,7 @@ void loop() {
       }
       if (!tempLowWarning && tempTooLowCount >= tempLowCountTilWarning) {
           tempLowWarning = true;
-          printWithFormatting("Cold");
+          printWithFormatting("Cld");
       }
 
     }
@@ -197,11 +196,10 @@ void loop() {
       if (humidity > HUMID_THRESHOLD_HIGH) {
           humidTooHighCount++;
           delay(1000);
-          tone(BUZZER_PIN, 244, 15); // debug
       }
       if (!humidHighWarning && humidTooHighCount >= humidHighCountTilWarning) {
           humidHighWarning = true;
-          printWithFormatting("Humid");
+          printWithFormatting("Hum");
       }
     }
         if (humidLowWarning == false) {
@@ -248,46 +246,25 @@ if (millis() >= alarmStartTime) {
   runCount++;
 }
 
-void printWithFormatting(const char* text) {
-  int length = 0;
-  if (cursorX == 0) {
-    lcd.clear();
+void printWithFormatting(String text) {
+
+
     //time stamping
-    DateTime now = rtc.now();
-    int minute = now.minute();
-    int hour = now.hour(); 
-    lcd.print(hour, DEC);
-    lcd.print(':');
-    lcd.print(minute < 10 ? "0" : ""); // Leading zero for minutes
-    lcd.print(minute, DEC);
-    lcd.print(' ');
-    lcd.setCursor(0,1);
-    lcd.print(text);
-    while (text[length] != '\0') {
-        length++;
-    }
-  } else {
+    int hours = (millis() / 3600000);
+    int mins = (millis() /  60000);
     lcd.setCursor(cursorX, 0);
-    DateTime now = rtc.now();
-    int minute = now.minute();
-    int hour = now.hour(); 
-    lcd.print(hour, DEC);
+    lcd.print(hours, DEC);
     lcd.print(':');
-    lcd.print(minute < 10 ? "0" : ""); // Leading zero for minutes
-    lcd.print(minute, DEC);
+    lcd.print(mins < 10 ? "0" : ""); // Leading zero for minutes
+    lcd.print(mins, DEC);
     lcd.print(' ');
     lcd.setCursor(cursorX,1);
     lcd.print(text);
-    lcd.print(", ");
-    lcd.print(text);
-    while (text[length] != '\0') {
-        length++;
+    if (cursorX >= 15) {
+      lcd.autoscroll();
     }
-  } 
 
-if (cursorX >= 8) {
-   lcd.autoscroll();
-}
 
-  cursorX = length + 2; 
+cursorX += 5; // changed so strings are always 5
+
 } 
