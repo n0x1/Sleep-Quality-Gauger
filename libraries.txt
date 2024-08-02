@@ -4,3 +4,6 @@
 # Automatically added based on includes:
 
 LiquidCrystal
+DHTlib
+Adafruit Unified Sensor
+DHT sensor library
