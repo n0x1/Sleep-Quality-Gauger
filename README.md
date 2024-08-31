@@ -10,5 +10,7 @@ Abbreviation Meanings:
 * Dry: dry
 * Lgt: light (brightness)
 * Mov:  movement
+![image](https://github.com/user-attachments/assets/ec577550-f848-4c36-8a59-2e6547fe5b03)
+
 
 > only 3 max will display (autoscroll is glitchy) f your display overflows invest in your sleeping environment ASAP
