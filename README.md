@@ -1,3 +1,6 @@
+## Sleep Quality Gauger!
+wokwi schematic and code: https://wokwi.com/projects/404974123144504321  
+  
 A raspberry pi pico gadget for sleep measuring humidity, temp, light lvl, motion, and has an alarm after set hours, displaying info with time stamps on lcd screen. 
 
 
